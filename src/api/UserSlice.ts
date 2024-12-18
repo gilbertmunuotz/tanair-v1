@@ -1,9 +1,23 @@
 import { fetchBaseQuery, createApi } from "@reduxjs/toolkit/query/react";
 import { SERVER_URI } from "../config/constant";
 import { User, UserResponse } from "../interfaces/interface";
+import { RootState } from "../library/store";
 
 const baseQuery = fetchBaseQuery({
     baseUrl: `${SERVER_URI}/v1/users`,
+    prepareHeaders: (headers, { getState }) => {
+        const state = getState() as RootState;
+
+        // Add Authorization header with JWT
+        const token = state.auth.jwtToken;
+
+        // Add the Authorization header if the token exists
+        if (token) {
+            headers.set('Authorization', `Bearer ${token}`);
+        }
+
+        return headers;
+    },
     credentials: 'include',
 });
 
