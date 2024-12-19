@@ -10,7 +10,6 @@ const baseQuery = fetchBaseQuery({
 
         // Add Authorization header with JWT
         const token = state.auth.jwtToken;
-        console.log("jwtToke", token);
 
         // Add the Authorization header if the token exists
         if (token) {
